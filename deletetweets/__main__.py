@@ -16,6 +16,8 @@ def main():
     parser.add_argument("--until", dest="until_date", help="Delete tweets until this date")
     parser.add_argument("--filter", action="append", dest="filters", choices=["replies", "retweets"],
                         help="Filter replies or retweets", default=[])
+    parser.add_argument("--keywords", dest="keywords", help="Delete tweets containing these keywords", 
+                        type=str, nargs="+", default=[])
     parser.add_argument("file", help="Path to the tweet.js file",
                         type=str)
     parser.add_argument("--spare-ids", dest="spare_ids", help="A list of tweet ids to spare",
@@ -51,7 +53,7 @@ def main():
         if f not in filters:
             filters.append(f)
 
-    deletetweets.delete(args.file, args.since_date, args.until_date, filters, args.spare_ids,
+    deletetweets.delete(args.file, args.since_date, args.until_date, args.keywords, filters, args.spare_ids,
                         args.min_likes, args.min_retweets, args.dry_run)
 
 
